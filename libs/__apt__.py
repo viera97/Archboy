@@ -1,7 +1,7 @@
 global path
 path = "/etc/apt/apt.conf"
 
-def write(username, password, proxy, port, auth=True):
+def write(username, password, proxy, port, auth=True, https=None, https_port=None, ftp=None, ftp_port=None):
     filepointer = open(path, "a")
     if auth:
         filepointer.write(f"Acquire::http::proxy \"http://{username}:{password}@{proxy}:{port}/\";\n")

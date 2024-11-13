@@ -1,11 +1,14 @@
 global path
 path = "/etc/dnf/dnf.conf"
 
-def write(username, password, proxy, port):
+def write(username, password, proxy, port, auth=True):
     filepointer = open(path, "a")
-    filepointer.write(f"proxy=http://{proxy}:{port}\n")
-    filepointer.write(f"proxy_username={username}\n")
-    filepointer.write(f"proxy_password={password}\n")
+    if auth:
+        filepointer.write(f"proxy=http://{proxy}:{port}\n")
+        filepointer.write(f"proxy_username={username}\n")
+        filepointer.write(f"proxy_password={password}\n")
+    else:
+        filepointer.write(f"proxy=http://{proxy}:{port}\n")
     filepointer.close()
 
 def clean():

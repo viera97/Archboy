@@ -1,10 +1,15 @@
 global path
 path = "/etc/systemd/system/docker.service.d/http-proxy.conf"
 
-def write(username, password, proxy, port):
+def write(username, password, proxy, port, auth=True):
     filepointer = open(path, "a")
-    filepointer.write(f"Environment=\"HTTP_PROXY=http://{username}:{password}@{proxy}:{port}\"\n")
-    filepointer.write(f"Environment=\"HTTPS_PROXY=http://{username}:{password}@{proxy}:{port}\"\n")
+    if auth:
+        filepointer.write(f"Environment=\"HTTP_PROXY=http://{username}:{password}@{proxy}:{port}\"\n")
+        filepointer.write(f"Environment=\"HTTPS_PROXY=http://{username}:{password}@{proxy}:{port}\"\n")
+    else:
+        filepointer.write(f"Environment=\"HTTP_PROXY=http://{proxy}:{port}\"\n")
+        filepointer.write(f"Environment=\"HTTPS_PROXY=http://{proxy}:{port}\"\n")
+
     filepointer.close()
 
 def clean():

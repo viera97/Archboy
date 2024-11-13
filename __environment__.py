@@ -1,12 +1,18 @@
 global path
 path = "/etc/environment"
 
-def write(username, password, proxy, port):
+def write(username, password, proxy, port, auth=True):
     filepointer = open(path, "a")
-    filepointer.write(f"http_proxy=\"http://{username}:{password}@{proxy}:{port}/\"\n")
-    filepointer.write(f"https_proxy=\"http://{username}:{password}@{proxy}:{port}/\"\n")
-    filepointer.write(f"ftp_proxy=\"ftp://{username}:{password}@{proxy}:{port}/\"\n")
-    filepointer.write(f"socks_proxy=\"socks://{username}:{password}@{proxy}:{port}/\"\n")
+    if auth:
+        filepointer.write(f"http_proxy=\"http://{username}:{password}@{proxy}:{port}/\"\n")
+        filepointer.write(f"https_proxy=\"http://{username}:{password}@{proxy}:{port}/\"\n")
+        filepointer.write(f"ftp_proxy=\"ftp://{username}:{password}@{proxy}:{port}/\"\n")
+        filepointer.write(f"socks_proxy=\"socks://{username}:{password}@{proxy}:{port}/\"\n")
+    else:
+        filepointer.write(f"http_proxy=\"http://{proxy}:{port}/\"\n")
+        filepointer.write(f"https_proxy=\"http://{proxy}:{port}/\"\n")
+        filepointer.write(f"ftp_proxy=\"ftp://{proxy}:{port}/\"\n")
+        filepointer.write(f"socks_proxy=\"socks://{proxy}:{port}/\"\n")
     filepointer.write("no_proxy=\"localhost,127.0.0.1\"")
     filepointer.close()
 

@@ -2,7 +2,11 @@ from . import __apt__ as apt
 from . import __dnf__ as dnf
 from . import __docker__ as docker 
 from . import __enviroment__ as enviroment
-from . import __gsettings__.py as gsettings 
+from . import __git__ as git 
+from . import __gsettings__ as gsettings 
+from . import __kde__ as kde 
+from . import __npm__ as npm
+from . import __yarn__ as yarn
 
 import os
 

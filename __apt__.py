@@ -1,12 +1,18 @@
 global path
 path = "/etc/apt/apt.conf"
 
-def write(username, password, proxy, port):
+def write(username, password, proxy, port, auth=True):
     filepointer = open(path, "a")
-    filepointer.write(f"Acquire::http::proxy \"http://{username}:{password}@{proxy}:{port}/\";\n")
-    filepointer.write(f"Acquire::https::proxy \"http://{username}:{password}@{proxy}:{port}/\";\n")
-    filepointer.write(f"Acquire::ftp::proxy \"ftp://{username}:{password}@{proxy}:{port}/\";\n")
-    filepointer.write(f"Acquire::socks::proxy \"socks://{username}:{password}@{proxy}:{port}/\";\n")
+    if auth:
+        filepointer.write(f"Acquire::http::proxy \"http://{username}:{password}@{proxy}:{port}/\";\n")
+        filepointer.write(f"Acquire::https::proxy \"http://{username}:{password}@{proxy}:{port}/\";\n")
+        filepointer.write(f"Acquire::ftp::proxy \"ftp://{username}:{password}@{proxy}:{port}/\";\n")
+        filepointer.write(f"Acquire::socks::proxy \"socks://{username}:{password}@{proxy}:{port}/\";\n")
+    else:
+        filepointer.write(f"Acquire::http::proxy \"http://{proxy}:{port}/\";\n")
+        filepointer.write(f"Acquire::https::proxy \"http://{proxy}:{port}/\";\n")
+        filepointer.write(f"Acquire::ftp::proxy \"ftp://{proxy}:{port}/\";\n")
+        filepointer.write(f"Acquire::socks::proxy \"socks://{proxy}:{port}/\";\n")
     filepointer.close()
 
 def clean():
